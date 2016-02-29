@@ -1,14 +1,24 @@
 package activity.spring.tender.serviceTasks;
 
+import java.util.Random;
+
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
 public class ProveraPlanaIBudzeta implements JavaDelegate {
 
 	@Override
-	public void execute(DelegateExecution arg0) throws Exception {
-		// TODO Auto-generated method stub
-		;
+	public void execute(DelegateExecution exection) throws Exception {
+		
+		boolean odbijen;
+		Random rn = new Random();
+		
+		int randNumb = rn.nextInt(10);
+		
+		if(randNumb<8) odbijen = false;
+		else odbijen = true;
+		
+		exection.setVariable("odbijen", odbijen);
 	}
 
 }
