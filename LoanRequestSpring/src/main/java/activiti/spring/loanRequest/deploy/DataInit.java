@@ -12,6 +12,7 @@ import net.sourceforge.yamlbeans.YamlReader;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 
@@ -25,9 +26,10 @@ public class DataInit {
 	/* Properties */
 	
 	private static final String groupsPath ="./src/main/resources/properties/groups.yml";
-	private static final String usersPath ="./src/main/resources/properties/users.yml";
+	private static final String usersPath ="./src/main/resources/properties/users2.yml";
 	private static ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 	private static IdentityService identityService = processEngine.getIdentityService(); 
+	private static RuntimeService runtimeService = processEngine.getRuntimeService();
 
 	/* Private methods */
 	
