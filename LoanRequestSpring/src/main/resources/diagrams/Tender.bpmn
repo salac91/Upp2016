@@ -213,7 +213,9 @@
     <userTask id="usertask14" name="Narucilac pokrece restriktivni postupak"></userTask>
     <exclusiveGateway id="exclusivegateway19" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow99" sourceRef="servicetask1" targetRef="exclusivegateway19"></sequenceFlow>
-    <sequenceFlow id="flow100" sourceRef="exclusivegateway19" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow100" sourceRef="exclusivegateway19" targetRef="exclusivegateway1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!odbijen}]]></conditionExpression>
+    </sequenceFlow>
     <endEvent id="endevent9" name="End"></endEvent>
     <sequenceFlow id="flow101" sourceRef="exclusivegateway19" targetRef="endevent9">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odbijen}]]></conditionExpression>
