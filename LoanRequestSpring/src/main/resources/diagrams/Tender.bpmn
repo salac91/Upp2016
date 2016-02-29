@@ -8,14 +8,14 @@
         <activiti:formProperty id="brojLotova" name="Broj Lotova" type="Long" default="1"></activiti:formProperty>
       </extensionElements>
     </startEvent>
-    <serviceTask id="servicetask1" name="Provera plana i budzeta"></serviceTask>
+    <serviceTask id="servicetask1" name="Provera plana i budzeta" activiti:class="activity.spring.tender.serviceTasks.ProveraPlanaIBudzeta"></serviceTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow2" sourceRef="exclusivegateway1" targetRef="endevent1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${cena<400000}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask1" name="Formiranje komisije"></userTask>
+    <userTask id="usertask1" name="Formiranje komisije" activiti:candidateGroups="narucilac"></userTask>
     <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${cena>400000}]]></conditionExpression>
     </sequenceFlow>
@@ -23,13 +23,13 @@
       <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${clanoviKomisije}"></multiInstanceLoopCharacteristics>
     </userTask>
     <sequenceFlow id="flow5" sourceRef="usertask1" targetRef="usertask2"></sequenceFlow>
-    <userTask id="usertask3" name="Komisija priprema konkursnu dokumentaciju"></userTask>
+    <userTask id="usertask3" name="Komisija priprema konkursnu dokumentaciju" activiti:candidateGroups="clanoviKomisije"></userTask>
     <sequenceFlow id="flow6" sourceRef="usertask2" targetRef="usertask3"></sequenceFlow>
-    <userTask id="usertask4" name="Komisija utvrdjuje procenjenu vrednost"></userTask>
+    <userTask id="usertask4" name="Komisija utvrdjuje procenjenu vrednost" activiti:candidateGroups="clanoviKomisije"></userTask>
     <sequenceFlow id="flow7" sourceRef="usertask3" targetRef="usertask4"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow8" sourceRef="usertask4" targetRef="exclusivegateway2"></sequenceFlow>
-    <sequenceFlow id="flow9" name="nabavka male vrednosti" sourceRef="exclusivegateway2" targetRef="mailtask4">
+    <sequenceFlow id="flow9" name="nabavka male vrednosti" sourceRef="exclusivegateway2" targetRef="usertask20">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${cena>400000 && cena<3000000}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent2" name="End"></endEvent>
@@ -86,7 +86,7 @@
       <sequenceFlow id="flow126" sourceRef="exclusivegateway27" targetRef="exclusivegateway9"></sequenceFlow>
       <sequenceFlow id="flow128" sourceRef="startevent2" targetRef="servicetask12"></sequenceFlow>
       <sequenceFlow id="flow129" sourceRef="servicetask12" targetRef="eventgateway1"></sequenceFlow>
-      <serviceTask id="servicetask12" name="Narucilac objavljuje poziv za podnosenje ponuda"></serviceTask>
+      <serviceTask id="servicetask12" name="Narucilac objavljuje poziv za podnosenje ponuda" activiti:class="activity.spring.tender.serviceTasks.PozivZaPodnosenjePonuda"></serviceTask>
       <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
         <timerEventDefinition></timerEventDefinition>
       </intermediateCatchEvent>
@@ -226,12 +226,7 @@
       <timerEventDefinition></timerEventDefinition>
     </boundaryEvent>
     <sequenceFlow id="flow104" sourceRef="restriktivniProces" targetRef="exclusivegateway5"></sequenceFlow>
-    <sequenceFlow id="flow106" sourceRef="mailtask4" targetRef="otvoreniProces"></sequenceFlow>
-    <serviceTask id="mailtask4" name="Narucilac poziva " activiti:type="mail">
-      <multiInstanceLoopCharacteristics isSequential="false">
-        <completionCondition>3</completionCondition>
-      </multiInstanceLoopCharacteristics>
-    </serviceTask>
+    <sequenceFlow id="flow106" sourceRef="usertask20" targetRef="otvoreniProces"></sequenceFlow>
     <sequenceFlow id="flow107" sourceRef="exclusivegateway5" targetRef="endevent2"></sequenceFlow>
     <endEvent id="endevent10" name="End"></endEvent>
     <sequenceFlow id="flow111" sourceRef="boundarytimer2" targetRef="endevent10"></sequenceFlow>
@@ -277,6 +272,7 @@
     </sequenceFlow>
     <serviceTask id="servicetask10" name="Zahtev prihvacen/odbijen"></serviceTask>
     <serviceTask id="servicetask11" name="Zahtev prihvacen/odbijen"></serviceTask>
+    <userTask id="usertask20" name="Narucilac poziva " activiti:candidateGroups="narucilac"></userTask>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
     <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
@@ -487,9 +483,6 @@
       <bpmndi:BPMNShape bpmnElement="endevent9" id="BPMNShape_endevent9">
         <omgdc:Bounds height="35.0" width="35.0" x="303.0" y="40.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="mailtask4" id="BPMNShape_mailtask4">
-        <omgdc:Bounds height="71.0" width="105.0" x="1480.0" y="115.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent10" id="BPMNShape_endevent10">
         <omgdc:Bounds height="35.0" width="35.0" x="748.0" y="1244.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -519,6 +512,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask11" id="BPMNShape_servicetask11">
         <omgdc:Bounds height="55.0" width="105.0" x="1415.0" y="1131.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask20" id="BPMNShape_usertask20">
+        <omgdc:Bounds height="71.0" width="105.0" x="1480.0" y="115.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="106.0" y="150.0"></omgdi:waypoint>
