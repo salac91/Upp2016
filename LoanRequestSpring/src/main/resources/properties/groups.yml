@@ -23,3 +23,9 @@ type: assignment
 id: clanovicKomisije   
 name: ClanovicKomisije
 type: assignment
+
+---
+
+id: Kandidati   
+name: Kandidati
+type: assignment
