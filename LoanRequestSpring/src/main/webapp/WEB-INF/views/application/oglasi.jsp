@@ -5,20 +5,15 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Welcome</title>
+		<title>Oglasi</title>
 		<link href="<c:url value="/resources/stylesheets/styles.css"/>"
 			rel="stylesheet" />
 	</head>
 	<body>
-		<h3>Dobrodošli ${username}!</h3>
-		<div class="message">${message}</div>
-		<a href="./tasksList">Pregled zadataka</a>
-		<br />
-		<a href="./newInstance">Pokretanje nove instance</a>
-		<br />
-		<a href="./oglasi">Oglasi</a>
-		<br />
-		<br />
-		<a href="<c:url value="/j_spring_security_logout" />"> Logout</a>
+		<div id="OtvoreniDiv">
+			<h1>Prijava na otvoreni konkurs</h1>
+			<a href="./oglasi/prijavaOtvoreni">Prijava</a>
+			
+		</div>
 	</body>
 </html>
