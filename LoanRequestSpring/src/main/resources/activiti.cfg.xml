@@ -8,6 +8,12 @@
 	<property name="jdbcUsername" value="root" />
 	<property name="jdbcPassword" value="root" />
   	<property name="databaseSchemaUpdate" value="true" />
-    <property name="mailServerPort" value="1025" />    
+    <property name="mailServerPort" value="1025" />  
+    <property name="customFormTypes">
+			<list>
+				<bean class="activiti.spring.tender.customforms.ListForm" />
+			</list>
+		</property>  
   </bean>
+
 </beans>

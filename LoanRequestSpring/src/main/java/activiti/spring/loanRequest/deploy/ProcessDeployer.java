@@ -15,7 +15,7 @@ public class ProcessDeployer {
 
 	/* Properties */
 	
-	private static final String filename = "diagrams/test.bpmn";
+	private static final String filename = "diagrams/testForm.bpmn";
 	private static Scanner scanner;
 
 	/* Main method */
