@@ -11,6 +11,7 @@ import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +37,8 @@ public class ApplicationController {
 	private RepositoryService repositoryService;
 	@Autowired
 	private RuntimeService runtimeService;
+	
+	public static String pid;
 
 	/* API */
 	
@@ -153,7 +156,8 @@ public class ApplicationController {
 		List<FormProperty> formProperties = formData.getFormProperties();
 		
 		if (formProperties.size() == 0) {
-			runtimeService.startProcessInstanceByKey("loanRequest");
+			ProcessInstance process = runtimeService.startProcessInstanceByKey("loanRequest");
+			pid = process.getId();			
 			String message = "Nova instanca je uspešno pokrenuta";
 			model.addAttribute("message", message);
 			return printWelcome(model);

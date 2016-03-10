@@ -15,5 +15,9 @@
 			<a href="./oglasi/prijavaOtvoreni">Prijava</a>
 			
 		</div>
+		
+		<div class="home">
+			<a href="${pageContext.request.contextPath}/application/welcome">Početna</a>
+		</div>
 	</body>
 </html>
