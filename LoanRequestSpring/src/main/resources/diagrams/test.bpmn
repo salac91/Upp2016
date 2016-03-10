@@ -4,7 +4,11 @@
   <process id="loanRequest" name="loanRequest" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="usertask1" name="User Task" activiti:assignee="${ponudjac}"></userTask>
+    <userTask id="usertask1" name="User Task">
+      <extensionElements>
+        <activiti:taskListener event="create" class="activity.spring.tender.Listeners.PrijavaListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
     <sequenceFlow id="flow3" sourceRef="usertask1" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow4" sourceRef="startevent1" targetRef="messageintermediatecatchevent1"></sequenceFlow>
     <intermediateCatchEvent id="messageintermediatecatchevent1" name="MessageCatchEvent">
@@ -21,13 +25,13 @@
         <omgdc:Bounds height="35.0" width="35.0" x="480.0" y="153.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
-        <omgdc:Bounds height="55.0" width="105.0" x="311.0" y="143.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="messageintermediatecatchevent1" id="BPMNShape_messageintermediatecatchevent1">
         <omgdc:Bounds height="35.0" width="35.0" x="200.0" y="163.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="416.0" y="170.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="167.0"></omgdi:waypoint>
         <omgdi:waypoint x="480.0" y="170.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
@@ -36,7 +40,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
         <omgdi:waypoint x="235.0" y="180.0"></omgdi:waypoint>
-        <omgdi:waypoint x="311.0" y="170.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="167.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

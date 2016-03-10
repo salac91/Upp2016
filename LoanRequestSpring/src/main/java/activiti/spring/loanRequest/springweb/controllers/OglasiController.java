@@ -23,9 +23,6 @@ public class OglasiController {
 	private RepositoryService repositoryService;
 	@Autowired
 	private RuntimeService runtimeService;
-	@Autowired
-	private FormService formService;
-	
 	
 	@RequestMapping(value="/oglasi")
 	private String Oglasi(ModelMap model){
