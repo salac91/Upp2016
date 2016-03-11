@@ -9,12 +9,12 @@
         <messageEventDefinition messageRef="porukaOtvoreni"></messageEventDefinition>
       </intermediateCatchEvent>
       <sequenceFlow id="flow17" sourceRef="eventgateway1" targetRef="messageintermediatecatchevent1"></sequenceFlow>
-      <userTask id="usertask6" name="Prijava">
+      <userTask id="usertask6" name="Prijava" activiti:formKey="executeTask">
         <extensionElements>
           <activiti:formProperty id="nazivPonudjaca" name="Naziv ponudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="emailPonudjaca" name="EmailPonudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="ponuda" name="Ponuda" type="long" required="true"></activiti:formProperty>
-          <activiti:formProperty id="upisan" name="Upisan" type="boolean"></activiti:formProperty>
+          <activiti:formProperty id="upisan" name="Upisan" type="boolean" default="false"></activiti:formProperty>
           <activiti:taskListener event="create" class="activity.spring.tender.Listeners.PrijavaListener"></activiti:taskListener>
         </extensionElements>
       </userTask>
@@ -24,15 +24,13 @@
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${upisan}]]></conditionExpression>
       </sequenceFlow>
       <serviceTask id="servicetask2" name="Provera da li je u bazi" activiti:class="activity.spring.tender.serviceTasks.ProveraBazePonudjaca"></serviceTask>
-      <userTask id="usertask7" name="Pondudjac podnosi dokumentaciju" activiti:assignee="${ponudjac}">
+      <userTask id="usertask7" name="Pondudjac podnosi dokumentaciju" activiti:assignee="${ponudjac}" activiti:formKey="executeTask">
         <extensionElements>
           <activiti:formProperty id="dokumentacija" name="Dokumetnacija" type="boolean"></activiti:formProperty>
         </extensionElements>
       </userTask>
-      <sequenceFlow id="flow23" sourceRef="exclusivegateway6" targetRef="usertask7">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!upisan}]]></conditionExpression>
-      </sequenceFlow>
-      <userTask id="usertask8" name="Komisija odobrava dokumentaiju" activiti:candidateGroups="clanoviKomisije">
+      <sequenceFlow id="flow23" sourceRef="exclusivegateway6" targetRef="usertask7"></sequenceFlow>
+      <userTask id="usertask8" name="Komisija odobrava dokumentaiju" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
         <extensionElements>
           <activiti:formProperty id="potvrdaKomisije" name="Potvrda Komisije" type="boolean"></activiti:formProperty>
         </extensionElements>
@@ -49,7 +47,7 @@
       <sequenceFlow id="flow39" sourceRef="exclusivegateway9" targetRef="servicetask4">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${tajmeristekao}]]></conditionExpression>
       </sequenceFlow>
-      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije">
+      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
         <extensionElements>
           <activiti:formProperty id="odabranPonudjac" name="Odabrani Ponudjac" type="enum" required="true"></activiti:formProperty>
         </extensionElements>
@@ -75,7 +73,7 @@
         </timerEventDefinition>
       </intermediateCatchEvent>
       <scriptTask id="scripttask3" name="Script Task" scriptFormat="javascript" activiti:autoStoreVariables="false">
-        <script>${tajmeristekao=true;}</script>
+        <script>tajmeristekao=true;</script>
       </scriptTask>
       <sequenceFlow id="flow145" sourceRef="timerintermediatecatchevent2" targetRef="scripttask3"></sequenceFlow>
       <sequenceFlow id="flow146" sourceRef="scripttask3" targetRef="exclusivegateway27"></sequenceFlow>
@@ -109,7 +107,7 @@
         <omgdc:Bounds height="61.0" width="105.0" x="1200.0" y="464.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask7" id="BPMNShape_usertask7">
-        <omgdc:Bounds height="71.0" width="105.0" x="1190.0" y="557.0"></omgdc:Bounds>
+        <omgdc:Bounds height="71.0" width="105.0" x="1190.0" y="565.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
         <omgdc:Bounds height="61.0" width="105.0" x="1380.0" y="570.0"></omgdc:Bounds>
@@ -169,10 +167,10 @@
       <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
         <omgdi:waypoint x="1130.0" y="514.0"></omgdi:waypoint>
         <omgdi:waypoint x="1129.0" y="595.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1190.0" y="592.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1190.0" y="600.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
-        <omgdi:waypoint x="1295.0" y="592.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1295.0" y="600.0"></omgdi:waypoint>
         <omgdi:waypoint x="1380.0" y="600.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
