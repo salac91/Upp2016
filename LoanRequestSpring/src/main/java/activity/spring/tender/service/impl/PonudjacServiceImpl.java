@@ -16,9 +16,9 @@ public class PonudjacServiceImpl implements PonudjacService {
 	@Autowired
 	private PonudjacRepo repo;
 
-	public Ponudjac findPonudjac(int id) {
+	public Ponudjac findPonudjac(String nazivPonudjaca) {
 		
-		return repo.findPonudjac(id);
+		return repo.findPonudjac(nazivPonudjaca);
 	}
 
 	public Ponudjac createPonudjac(Ponudjac data) {

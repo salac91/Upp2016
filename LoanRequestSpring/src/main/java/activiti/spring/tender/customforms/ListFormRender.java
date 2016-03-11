@@ -1,4 +1,4 @@
-package activiti.spring.tender.customforms;
+/*package activiti.spring.tender.customforms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,3 +37,4 @@ public class ListFormRender extends AbstractFormPropertyRenderer {
 	}
 
 }
+*/

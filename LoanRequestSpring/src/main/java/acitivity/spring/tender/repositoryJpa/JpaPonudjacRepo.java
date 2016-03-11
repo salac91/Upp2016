@@ -14,8 +14,12 @@ public class JpaPonudjacRepo implements PonudjacRepo {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Ponudjac findPonudjac(int id) {
-		return em.find(Ponudjac.class, id);
+	public Ponudjac findPonudjac(String nazivPonudjaca) {
+		Ponudjac ponudjac = (Ponudjac) em.createNativeQuery("select * from Ponudjac where Ponudjac.naziv like :custName")
+				.setParameter("custName", nazivPonudjaca)
+				.getSingleResult();
+		return ponudjac;
+			    
 	}
 
 	public Ponudjac createPonudjac(Ponudjac data) {

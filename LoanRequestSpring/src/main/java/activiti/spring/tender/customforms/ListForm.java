@@ -1,4 +1,4 @@
-package activiti.spring.tender.customforms;
+/*package activiti.spring.tender.customforms;
 
 import org.activiti.engine.form.AbstractFormType;
 
@@ -25,3 +25,4 @@ public class ListForm extends AbstractFormType{
 	}
 
 }
+*/
