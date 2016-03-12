@@ -4,7 +4,7 @@ lastName: Petrovic
 email: pera@something.com
 password: pera
 groups:
- - id: clanovicKomisije
+ - id: clanoviKomisije
  - id: manager
 ---
 id: zika

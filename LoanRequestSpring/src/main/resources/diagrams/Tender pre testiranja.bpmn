@@ -3,7 +3,7 @@
   <process id="myProcess" name="My process" isExecutable="true">
     <startEvent id="startevent1" name="Start">
       <extensionElements>
-        <activiti:formProperty id="tipProcesaRestriktivni" name="Tip procesa restriktivni?" type="boolean" default="false"></activiti:formProperty>
+        <activiti:formProperty id="tipProcesaRestriktivni" name="Tip procesa restriktivni?" type="boolean"></activiti:formProperty>
         <activiti:formProperty id="cena" name="Procenjena vrednost" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="brojLotova" name="Broj Lotova" type="long" default="1"></activiti:formProperty>
         <activiti:formProperty id="nazivNarucioca" name="Naziv narucioca" type="string" required="true"></activiti:formProperty>
@@ -11,6 +11,7 @@
       </extensionElements>
     </startEvent>
     <serviceTask id="servicetask1" name="Provera plana i budzeta" activiti:class="activity.spring.tender.serviceTasks.ProveraPlanaIBudzeta"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow2" sourceRef="exclusivegateway1" targetRef="endevent1">
@@ -40,6 +41,7 @@
     <sequenceFlow id="flow9" name="nabavka male vrednosti" sourceRef="exclusivegateway2" targetRef="usertask20">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${cena>400000 && cena<3000000}]]></conditionExpression>
     </sequenceFlow>
+    <endEvent id="endevent2" name="End"></endEvent>
     <subProcess id="otvoreniProces" name="Otvoreni proces">
       <multiInstanceLoopCharacteristics isSequential="false">
         <loopCardinality>${brojLotova}</loopCardinality>
@@ -50,13 +52,12 @@
         <messageEventDefinition></messageEventDefinition>
       </intermediateCatchEvent>
       <sequenceFlow id="flow17" sourceRef="eventgateway1" targetRef="messageintermediatecatchevent1"></sequenceFlow>
-      <userTask id="usertask6" name="Prijava" activiti:assignee="${ponudjac}" activiti:formKey="executeTask">
+      <userTask id="usertask6" name="Prijava" activiti:assignee="${ponudjac}">
         <extensionElements>
           <activiti:formProperty id="nazivPonudjaca" name="Naziv ponudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="emailPonudjaca" name="EmailPonudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="ponuda" name="Ponuda" type="long" required="true"></activiti:formProperty>
-          <activiti:formProperty id="upisan" name="Upisan" type="boolean" default="false"></activiti:formProperty>
-          <activiti:taskListener event="create" class="activity.spring.tender.Listeners.PrijavaListener"></activiti:taskListener>
+          <activiti:formProperty id="upisan" name="Upisan" type="boolean"></activiti:formProperty>
         </extensionElements>
       </userTask>
       <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
@@ -65,17 +66,17 @@
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${upisan}]]></conditionExpression>
       </sequenceFlow>
       <serviceTask id="servicetask2" name="Provera da li je u bazi" activiti:class="activity.spring.tender.serviceTasks.ProveraBazePonudjaca"></serviceTask>
-      <userTask id="usertask7" name="Pondudjac podnosi dokumentaciju" activiti:assignee="${ponudjac}" activiti:formKey="executeTask">
+      <userTask id="usertask7" name="Pondudjac podnosi dokumentaciju" activiti:assignee="${ponudjac}">
         <extensionElements>
-          <activiti:formProperty id="dokumentacija" name="Dokumetnacija" type="boolean" default="false"></activiti:formProperty>
+          <activiti:formProperty id="dokumentacija" name="Dokumetnacija" type="boolean"></activiti:formProperty>
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow23" sourceRef="exclusivegateway6" targetRef="usertask7">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!upisan}]]></conditionExpression>
       </sequenceFlow>
-      <userTask id="usertask8" name="Komisija odobrava dokumentaiju" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
+      <userTask id="usertask8" name="Komisija odobrava dokumentaiju" activiti:candidateGroups="clanoviKomisije">
         <extensionElements>
-          <activiti:formProperty id="potvrdaKomisije" name="Potvrda Komisije" type="boolean" default="false"></activiti:formProperty>
+          <activiti:formProperty id="potvrdaKomisije" name="Potvrda Komisije" type="boolean"></activiti:formProperty>
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow26" sourceRef="usertask7" targetRef="usertask8"></sequenceFlow>
@@ -90,14 +91,14 @@
       <sequenceFlow id="flow39" sourceRef="exclusivegateway9" targetRef="servicetask4">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${tajmeristekao}]]></conditionExpression>
       </sequenceFlow>
-      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
+      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije">
         <extensionElements>
           <activiti:formProperty id="odabranPonudjac" name="Odabrani Ponudjac" type="enum" required="true"></activiti:formProperty>
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow40" sourceRef="servicetask4" targetRef="usertask10"></sequenceFlow>
       <serviceTask id="servicetask4" name="Rangiranje ponuda" activiti:class="activity.spring.tender.serviceTasks.RangiranjePonuda"></serviceTask>
-      <userTask id="usertask11" name="Ponudjac podpisuje ugovor" activiti:assignee="${odabranPonudjac}" activiti:formKey="executeTask"></userTask>
+      <userTask id="usertask11" name="Ponudjac podpisuje ugovor" activiti:assignee="${odabranPonudjac}"></userTask>
       <sequenceFlow id="flow41" sourceRef="usertask10" targetRef="usertask11"></sequenceFlow>
       <endEvent id="endevent3" name="End"></endEvent>
       <sequenceFlow id="flow42" sourceRef="usertask11" targetRef="endevent3"></sequenceFlow>
@@ -111,9 +112,7 @@
       <sequenceFlow id="flow129" sourceRef="servicetask12" targetRef="eventgateway1"></sequenceFlow>
       <serviceTask id="servicetask12" name="Narucilac objavljuje poziv za podnosenje ponuda" activiti:class="activity.spring.tender.serviceTasks.PozivZaPodnosenjePonuda"></serviceTask>
       <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
-        <timerEventDefinition>
-          <timeDate>2016-03-12T13:32:00</timeDate>
-        </timerEventDefinition>
+        <timerEventDefinition></timerEventDefinition>
       </intermediateCatchEvent>
       <scriptTask id="scripttask3" name="Script Task" scriptFormat="javascript" activiti:autoStoreVariables="false">
         <script>${tajmeristekao=true;}</script>
@@ -296,10 +295,10 @@
     </boundaryEvent>
     <sequenceFlow id="flow104" sourceRef="restriktivniProces" targetRef="exclusivegateway5"></sequenceFlow>
     <sequenceFlow id="flow106" sourceRef="usertask20" targetRef="otvoreniProces"></sequenceFlow>
+    <sequenceFlow id="flow107" sourceRef="exclusivegateway5" targetRef="endevent2"></sequenceFlow>
     <endEvent id="endevent10" name="End"></endEvent>
     <sequenceFlow id="flow111" sourceRef="boundarytimer2" targetRef="endevent10"></sequenceFlow>
     <userTask id="usertask20" name="Narucilac poziva " activiti:candidateGroups="narucilac"></userTask>
-    <sequenceFlow id="flow147" sourceRef="startevent1" targetRef="otvoreniProces"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
     <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
@@ -329,6 +328,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="1130.0" y="129.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="2360.0" y="131.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="otvoreniProces" id="BPMNShape_otvoreniProces">
         <omgdc:Bounds height="371.0" width="1625.0" x="580.0" y="360.0"></omgdc:Bounds>
@@ -531,6 +533,10 @@
       <bpmndi:BPMNShape bpmnElement="usertask20" id="BPMNShape_usertask20">
         <omgdc:Bounds height="71.0" width="105.0" x="1480.0" y="115.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="106.0" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="150.0" y="150.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
         <omgdi:waypoint x="399.0" y="130.0"></omgdi:waypoint>
         <omgdi:waypoint x="399.0" y="75.0"></omgdi:waypoint>
@@ -891,14 +897,15 @@
         <omgdi:waypoint x="1532.0" y="186.0"></omgdi:waypoint>
         <omgdi:waypoint x="1392.0" y="360.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow107" id="BPMNEdge_flow107">
+        <omgdi:waypoint x="2310.0" y="295.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2310.0" y="148.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2360.0" y="148.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow111" id="BPMNEdge_flow111">
         <omgdi:waypoint x="629.0" y="1237.0"></omgdi:waypoint>
         <omgdi:waypoint x="631.0" y="1265.0"></omgdi:waypoint>
         <omgdi:waypoint x="748.0" y="1261.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow147" id="BPMNEdge_flow147">
-        <omgdi:waypoint x="88.0" y="168.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1392.0" y="360.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

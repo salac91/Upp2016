@@ -15,7 +15,11 @@ public class UpisPonudjacaUListu implements JavaDelegate {
 		
 		boolean var1 = (Boolean) execute.getVariable("dokumentacija");
 		boolean var2 = (Boolean)execute.getVariable("potvrdaKomisije");
-		boolean var3 = (Boolean)execute.getVariable("ubazi");
+		boolean var3=false;
+		try{
+			var3 = (Boolean)execute.getVariable("ubazi");
+		}catch(Exception e){
+		}
 		boolean upisi;
 		if((var1 && var2) || var3)
 			upisi=true;

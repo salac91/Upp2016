@@ -13,7 +13,7 @@ public class PozivZaPodnosenjePonuda implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution execute) throws Exception {
 		List<Ponudjac> ponudjaci=new ArrayList<Ponudjac>();
-		Boolean tajmeristekao=false;
+		boolean tajmeristekao=false;
 		execute.setVariable("tajmeristekao", tajmeristekao);
 		execute.setVariable("ponudjaci", ponudjaci);
 	}

@@ -9,6 +9,8 @@
 	<property name="jdbcPassword" value="root" />
   	<property name="databaseSchemaUpdate" value="true" />
     <property name="mailServerPort" value="1025" />  
+    <!-- da bi tajmer radio -->
+    <property name="jobExecutorActivate" value="true" /> 
   </bean>
 
 </beans>
