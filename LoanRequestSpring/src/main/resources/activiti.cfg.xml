@@ -11,6 +11,11 @@
     <property name="mailServerPort" value="1025" />  
     <!-- da bi tajmer radio -->
     <property name="jobExecutorActivate" value="true" /> 
+    <property name="customFormTypes">
+    <list>
+      <bean class="activiti.spring.tender.customforms.ListForm"/>
+    </list>
+  </property>
   </bean>
 
 </beans>

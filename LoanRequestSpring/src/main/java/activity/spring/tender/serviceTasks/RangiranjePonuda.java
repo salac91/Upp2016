@@ -28,5 +28,10 @@ public class RangiranjePonuda implements JavaDelegate{
 	        }
 	        
 	        execute.setVariable("ponudjaciSortirano", ponudjaci);
+	        
+	        List<Ponudjac> test=(List<Ponudjac>) execute.getVariable("ponudjaciSortirano");
+	        Ponudjac t=test.get(0);
+	        String testliste = t.getNaziv();
+	        execute.setVariable("testliste", testliste);
 	}
 }

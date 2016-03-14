@@ -13,7 +13,10 @@
           <activiti:formProperty id="nazivPonudjaca" name="Naziv ponudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="emailPonudjaca" name="EmailPonudjaca" type="string" required="true"></activiti:formProperty>
           <activiti:formProperty id="ponuda" name="Ponuda" type="long" required="true"></activiti:formProperty>
-          <activiti:formProperty id="upisan" name="Da li se nalazite u bazi?" type="boolean" default="false"></activiti:formProperty>
+          <activiti:formProperty id="upisan" name="Da li se nalazite u bazi?" type="enum">
+            <activiti:value id="da" name=" Da"></activiti:value>
+            <activiti:value id="ne" name="Ne"></activiti:value>
+          </activiti:formProperty>
           <activiti:taskListener event="create" class="activity.spring.tender.Listeners.PrijavaListener"></activiti:taskListener>
         </extensionElements>
       </userTask>
@@ -27,7 +30,10 @@
       </userTask>
       <userTask id="usertask8" name="Komisija odobrava dokumentaiju" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
         <extensionElements>
-          <activiti:formProperty id="potvrdaKomisije" name="Potvrda Komisije" type="boolean"></activiti:formProperty>
+          <activiti:formProperty id="potvrdaKomisije" name="Potvrda dokumentacije od strane komisije" type="enum">
+            <activiti:value id="da" name="Dokumentacija odgovara"></activiti:value>
+            <activiti:value id="ne" name="Dokumentacija ne odgovara"></activiti:value>
+          </activiti:formProperty>
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow26" sourceRef="usertask7" targetRef="usertask8"></sequenceFlow>
@@ -38,7 +44,11 @@
       <sequenceFlow id="flow38" sourceRef="exclusivegateway9" targetRef="eventgateway1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!tajmeristekao}]]></conditionExpression>
       </sequenceFlow>
-      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask"></userTask>
+      <userTask id="usertask10" name="Komisija bira ponudjaca" activiti:candidateGroups="clanoviKomisije" activiti:formKey="executeTask">
+        <extensionElements>
+          <activiti:formProperty id="odabranPonudjac" name="Odaberite ponudjaca za sklapanje ugovora" type="list"></activiti:formProperty>
+        </extensionElements>
+      </userTask>
       <sequenceFlow id="flow40" sourceRef="servicetask4" targetRef="usertask10"></sequenceFlow>
       <serviceTask id="servicetask4" name="Rangiranje ponuda" activiti:class="activity.spring.tender.serviceTasks.RangiranjePonuda"></serviceTask>
       <userTask id="usertask11" name="Ponudjac podpisuje ugovor" activiti:assignee="${odabranPonudjac}" activiti:formKey="executeTask"></userTask>
@@ -53,7 +63,7 @@
       <serviceTask id="servicetask12" name="Narucilac objavljuje poziv za podnosenje ponuda" activiti:class="activity.spring.tender.serviceTasks.PozivZaPodnosenjePonuda"></serviceTask>
       <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
         <timerEventDefinition>
-          <timeDuration>PT20S</timeDuration>
+          <timeDuration>PT10S</timeDuration>
         </timerEventDefinition>
       </intermediateCatchEvent>
       <sequenceFlow id="flow153" sourceRef="eventgateway1" targetRef="timerintermediatecatchevent2"></sequenceFlow>
@@ -66,10 +76,10 @@
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${tajmeristekao}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="flow162" sourceRef="exclusivegateway6" targetRef="servicetask2">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${upisan}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${upisan=="da"}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="flow163" sourceRef="exclusivegateway6" targetRef="usertask7">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!upisan}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${upisan=="ne"}]]></conditionExpression>
       </sequenceFlow>
     </subProcess>
     <startEvent id="startevent3" name="Start"></startEvent>

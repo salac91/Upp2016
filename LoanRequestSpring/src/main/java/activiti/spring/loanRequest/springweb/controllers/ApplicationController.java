@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import activiti.spring.tender.entity.Ponudjac;
+
 @Controller
 @RequestMapping(value="/application")
 public class ApplicationController {
@@ -115,6 +117,9 @@ public class ApplicationController {
 				Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 				model.addAttribute("task", task);
 				
+				//ovde dodajem listu
+				List<Ponudjac> ponudjaci=(List<Ponudjac>) runtimeService.getVariable(pid,  "ponudjaciSortirano");
+				model.addAttribute("ponudjaci", ponudjaci);
 				//U definiciji procesa je definisan formKey, na osnovu kog se odredjuje 
 				//koja se stranica prikazuje
 				String form = formService.getTaskFormData(taskId).getFormKey();

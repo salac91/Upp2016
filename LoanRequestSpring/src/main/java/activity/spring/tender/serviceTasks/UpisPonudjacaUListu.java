@@ -13,24 +13,24 @@ public class UpisPonudjacaUListu implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execute) throws Exception {
 		
-		boolean var1 = (Boolean) execute.getVariable("dokumentacija");
-		boolean var2 = (Boolean)execute.getVariable("potvrdaKomisije");
+		//boolean var1 = (Boolean) execute.getVariable("dokumentacija");
+		String var2 = (String)execute.getVariable("potvrdaKomisije");
 		boolean var3=false;
 		try{
 			var3 = (Boolean)execute.getVariable("ubazi");
 		}catch(Exception e){
 		}
 		boolean upisi;
-		if((var1 && var2) || var3)
+		if(var2=="da" || var3)
 			upisi=true;
 		else 
 			upisi=false;
 		
 		
 		
-		if(upisi){
+		//if(upisi){
 			List<Ponudjac>ponudjaci=(List<Ponudjac>) execute.getVariable("ponudjaci");
-			Ponudjac ponudjac = null;
+			Ponudjac ponudjac = new Ponudjac();
 			ponudjac.setNaziv((String)execute.getVariable("nazivPonudjaca"));
 			ponudjac.setEmail((String)execute.getVariable("emailPonudjaca"));
 			ponudjac.setPonuda((Long)execute.getVariable("ponuda"));
@@ -39,7 +39,7 @@ public class UpisPonudjacaUListu implements JavaDelegate {
 			ponudjaci.add(ponudjac);
 			execute.setVariable("ponudjaci", ponudjaci);
 			
-		}
+		//}
 	}
 	
 	

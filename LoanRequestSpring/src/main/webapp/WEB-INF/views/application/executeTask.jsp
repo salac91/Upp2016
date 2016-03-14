@@ -57,6 +57,17 @@
 									</c:forEach>
 								</select>
 							</c:if>
+							<c:if test="${formProperty.type.name.equals('list')}">
+								<select
+									<c:if test="${formProperty.writable==true}"> name="${formProperty.id}"</c:if>
+									<c:if test="${formProperty.writable==false}"> disabled </c:if>>
+	
+									<c:forEach var="person"
+										items="${ponudjaci}">
+										<option value="${person.naziv}">${person.naziv} ${person.ponuda}</option>
+									</c:forEach>
+								</select>
+							</c:if>
 						</c:if>
 						
 						<c:if test="${formProperty.readable == false}">

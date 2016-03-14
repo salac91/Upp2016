@@ -48,6 +48,11 @@
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
 		<property name="mailServerPort" value="1025" />  
+		<property name="customFormTypes">
+   			 <list>
+    			  <bean class="activiti.spring.tender.customforms.ListForm"/>
+   			 </list>
+  </property>
 	</bean>
 
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
