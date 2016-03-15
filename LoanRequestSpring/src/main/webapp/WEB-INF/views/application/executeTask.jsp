@@ -40,10 +40,10 @@
 							</c:if>
 	
 							<c:if test="${formProperty.type.name.equals('boolean')}">
-								<input type="checkbox"
+								<input type="file"
 									<c:if test="${formProperty.writable==true}"> name="${formProperty.id}"</c:if>
 									<c:if test="${formProperty.writable==false}"> disabled </c:if>
-									<c:if test="${formProperty.value==true}">checked </c:if> />
+									name="Upload file" />
 							</c:if>
 	
 							<c:if test="${formProperty.type.name.equals('enum')}">

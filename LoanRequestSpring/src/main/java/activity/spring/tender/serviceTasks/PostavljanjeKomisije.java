@@ -18,21 +18,8 @@ public class PostavljanjeKomisije implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		
-		List<Ponudjac> kandidati=new ArrayList<Ponudjac>();
-		boolean tajmeristekao=false;
-		
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		Date newDate = DateUtils.addMinutes(date, 2);		
-		String vremeIstekaTajmeraTemp = dateFormat.format(newDate);
-		String[] tokens = vremeIstekaTajmeraTemp.split(" ");
-		String vremeIstekaTajmera = tokens[0] + "T" + tokens[1];
-		
-		execution.setVariable("vremeIstekaTajmera", vremeIstekaTajmera);
-		execution.setVariable("tajmeristekao", tajmeristekao);
-		execution.setVariable("kandidati", kandidati);
-		execution.setVariable("oglasiKvalifikacijeVidljiv", true);
+		List<User> clanoviKomisije=new ArrayList<User>();
+		execution.setVariable("clanoviKomisije", clanoviKomisije);
 	}
 
 }
