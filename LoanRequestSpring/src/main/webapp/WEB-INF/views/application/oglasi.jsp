@@ -10,12 +10,13 @@
 			rel="stylesheet" />
 	</head>
 	<body>
+	<c:if test="${oglasOtvoreni == true}">
 		<div id="OtvoreniDiv">
 			<h1>Prijava na otvoreni konkurs</h1>
 			<a href="./oglasi/prijavaOtvoreni">Prijava</a>
 			
 		</div>
-		
+	</c:if>
 		<div class="home">
 			<a href="${pageContext.request.contextPath}/application/welcome">Početna</a>
 		</div>

@@ -1,5 +1,7 @@
 package activiti.spring.loanRequest.springweb.controllers;
 
+import java.util.List;
+
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -15,6 +17,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import activiti.spring.tender.entity.Ponudjac;
+
 @Controller
 @RequestMapping(value="/application")
 public class OglasiController {
@@ -26,6 +30,24 @@ public class OglasiController {
 	
 	@RequestMapping(value="/oglasi")
 	private String Oglasi(ModelMap model){
+		try{
+		User user;
+		String pid = ApplicationController.pid;
+		boolean oglasotvoreni=(Boolean) runtimeService.getVariable(pid, "oglasOtvoreniVidljiv");
+		List<Ponudjac> ponudjaciubazi=(List<Ponudjac>) runtimeService.getVariable(pid, "ponudjaci");
+		user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id = user.getUsername();
+		for(Ponudjac pon:ponudjaciubazi){
+			if(pon.getNaziv().equals(id)) {
+				oglasotvoreni=false;
+				break;
+			}
+		}
+		
+		model.addAttribute("oglasOtvoreni",oglasotvoreni);
+		}catch(Exception e){
+			
+		}
 		return "application/oglasi";
 	}
 	
@@ -48,7 +70,7 @@ public class OglasiController {
 		String id = user.getUsername();
 		Execution execution= runtimeService.createExecutionQuery().processInstanceId(pid).messageEventSubscriptionName("porukaOtvoreni").singleResult();
 		runtimeService.messageEventReceived("porukaOtvoreni", execution.getId(), null);
-		
+		//runtimeService.setVariable(pid, "oglasOtvoreniVidljiv", false);
 		runtimeService.setVariable(pid, "ponudjac", id);
 		
 		return "application/oglasi";

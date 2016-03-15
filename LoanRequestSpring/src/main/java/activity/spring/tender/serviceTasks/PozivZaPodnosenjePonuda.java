@@ -20,6 +20,7 @@ public class PozivZaPodnosenjePonuda implements JavaDelegate{
 		execute.setVariable("ponudjaciubazi", ponudjaciubazi);
 		execute.setVariable("tajmeristekao", tajmeristekao);
 		execute.setVariable("ponudjaci", ponudjaci);
+		execute.setVariable("oglasOtvoreniVidljiv", true);
 	}
 
 }

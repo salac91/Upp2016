@@ -8,6 +8,8 @@ public class TajmerIstekao implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution arg0) throws Exception {
 		arg0.setVariable("tajmeristekao", true);
+		arg0.setVariable("oglasOtvoreniVidljiv", false);
+		
 		
 	}
 
