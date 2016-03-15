@@ -19,7 +19,7 @@ public class Ponudjac implements Serializable {
 		private boolean dokumentacija;
 		private long ponuda;
 		
-		public Ponudjac(int id, String naziv, String email, boolean dokumentacija, long ponuda) {
+		public Ponudjac(String naziv, String email, boolean dokumentacija, long ponuda) {
 			super();
 			this.naziv = naziv;
 			this.email = email;

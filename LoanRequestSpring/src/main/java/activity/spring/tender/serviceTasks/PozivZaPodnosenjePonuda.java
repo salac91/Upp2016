@@ -14,6 +14,10 @@ public class PozivZaPodnosenjePonuda implements JavaDelegate{
 	public void execute(DelegateExecution execute) throws Exception {
 		List<Ponudjac> ponudjaci=new ArrayList<Ponudjac>();
 		boolean tajmeristekao=false;
+		List<Ponudjac> ponudjaciubazi= new ArrayList<Ponudjac>();
+		Ponudjac mita=new Ponudjac("zika","zikinnmejl", true, 10000000);
+		ponudjaciubazi.add(mita);
+		execute.setVariable("ponudjaciubazi", ponudjaciubazi);
 		execute.setVariable("tajmeristekao", tajmeristekao);
 		execute.setVariable("ponudjaci", ponudjaci);
 	}
