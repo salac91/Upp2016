@@ -70,7 +70,6 @@ public class OglasiController {
 		String id = user.getUsername();
 		Execution execution= runtimeService.createExecutionQuery().processInstanceId(pid).messageEventSubscriptionName("porukaOtvoreni").singleResult();
 		runtimeService.messageEventReceived("porukaOtvoreni", execution.getId(), null);
-		//runtimeService.setVariable(pid, "oglasOtvoreniVidljiv", false);
 		runtimeService.setVariable(pid, "ponudjac", id);
 		
 		return "application/oglasi";

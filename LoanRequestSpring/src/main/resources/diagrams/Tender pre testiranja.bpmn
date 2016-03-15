@@ -441,7 +441,7 @@
         <omgdc:Bounds height="35.0" width="35.0" x="880.0" y="860.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask13" id="BPMNShape_servicetask13">
-        <omgdc:Bounds height="55.0" width="105.0" x="670.0" y="913.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="670.0" y="897.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
         <omgdc:Bounds height="55.0" width="105.0" x="1020.0" y="980.0"></omgdc:Bounds>
@@ -740,10 +740,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow130" id="BPMNEdge_flow130">
         <omgdi:waypoint x="615.0" y="940.0"></omgdi:waypoint>
-        <omgdi:waypoint x="670.0" y="940.0"></omgdi:waypoint>
+        <omgdi:waypoint x="670.0" y="924.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow131" id="BPMNEdge_flow131">
-        <omgdi:waypoint x="775.0" y="940.0"></omgdi:waypoint>
+        <omgdi:waypoint x="775.0" y="924.0"></omgdi:waypoint>
         <omgdi:waypoint x="840.0" y="940.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow143" id="BPMNEdge_flow143">
