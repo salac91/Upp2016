@@ -58,7 +58,7 @@
       <serviceTask id="servicetask12" name="Narucilac objavljuje poziv za podnosenje ponuda" activiti:class="activity.spring.tender.serviceTasks.PozivZaPodnosenjePonuda"></serviceTask>
       <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
         <timerEventDefinition>
-          <timeDuration>PT30S</timeDuration>
+          <timeDate>${vremeIstekaTajmera}</timeDate>
         </timerEventDefinition>
       </intermediateCatchEvent>
       <sequenceFlow id="flow153" sourceRef="eventgateway1" targetRef="timerintermediatecatchevent2"></sequenceFlow>

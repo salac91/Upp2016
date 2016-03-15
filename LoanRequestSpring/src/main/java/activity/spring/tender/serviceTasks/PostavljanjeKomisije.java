@@ -8,20 +8,19 @@ import java.util.List;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.activiti.engine.identity.User;
 import org.apache.commons.lang3.time.DateUtils;
 
 import activiti.spring.tender.entity.Ponudjac;
 
-public class PozivZaPodnosenjePonuda implements JavaDelegate{
+public class PostavljanjeKomisije implements JavaDelegate {
 
 	@Override
-	public void execute(DelegateExecution execute) throws Exception {
+	public void execute(DelegateExecution execution) throws Exception {
 		
-		List<Ponudjac> ponudjaci=new ArrayList<Ponudjac>();
+		List<Ponudjac> kandidati=new ArrayList<Ponudjac>();
 		boolean tajmeristekao=false;
-		List<Ponudjac> ponudjaciubazi= new ArrayList<Ponudjac>();
-		Ponudjac mita=new Ponudjac("zika","zikinnmejl", true, 10000000);
-		ponudjaciubazi.add(mita);
+		
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
@@ -30,11 +29,10 @@ public class PozivZaPodnosenjePonuda implements JavaDelegate{
 		String[] tokens = vremeIstekaTajmeraTemp.split(" ");
 		String vremeIstekaTajmera = tokens[0] + "T" + tokens[1];
 		
-		execute.setVariable("vremeIstekaTajmera", vremeIstekaTajmera);
-		execute.setVariable("ponudjaciubazi", ponudjaciubazi);
-		execute.setVariable("tajmeristekao", tajmeristekao);
-		execute.setVariable("ponudjaci", ponudjaci);
-		execute.setVariable("oglasOtvoreniVidljiv", true);
+		execution.setVariable("vremeIstekaTajmera", vremeIstekaTajmera);
+		execution.setVariable("tajmeristekao", tajmeristekao);
+		execution.setVariable("kandidati", kandidati);
+		execution.setVariable("oglasiKvalifikacijeVidljiv", true);
 	}
 
 }
