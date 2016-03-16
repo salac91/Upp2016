@@ -34,13 +34,16 @@ public class OglasiController {
 		//try{
 		User user;
 		//String pid = ApplicationController.pid;
-		ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("loanRequest").latestVersion().singleResult();
+		//ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("loanRequest").latestVersion().singleResult();
+		//ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().deploymentId(ApplicationController.pid).singleResult();
+		ProcessInstance procDef = runtimeService.createProcessInstanceQuery().processDefinitionKey("loanRequest").singleResult();
 		
-		String pid = procDef.getId();
-		boolean oglasotvoreni= (Boolean) runtimeService.getVariable(pid, "oglasOtvoreniVidljiv");
-		boolean oglasKvalifikacije=(Boolean) runtimeService.getVariable(pid, "oglasKvalifikacijeVidljiv");
-		boolean oglasRestriktivni=(Boolean) runtimeService.getVariable(pid, "oglasRestriktivniVidljiv");
-		List<Ponudjac> ponudjaciubazi=(List<Ponudjac>) runtimeService.getVariable(pid, "ponudjaci");
+		String pid1 = procDef.getId();
+		
+		boolean oglasotvoreni= (Boolean) runtimeService.getVariable(pid1, "oglasOtvoreniVidljiv");
+		boolean oglasKvalifikacije=(Boolean) runtimeService.getVariable(pid1, "oglasKvalifikacijeVidljiv");
+		boolean oglasRestriktivni=(Boolean) runtimeService.getVariable(pid1, "oglasRestriktivniVidljiv");
+		List<Ponudjac> ponudjaciubazi=(List<Ponudjac>) runtimeService.getVariable(pid1, "ponudjaci");
 		user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id = user.getUsername();
 		for(Ponudjac pon:ponudjaciubazi){

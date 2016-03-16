@@ -19,10 +19,10 @@ public class Inicijalizacija implements JavaDelegate  {
 		execution.setVariable("oglasOtvoreniVidljiv", oglasOtvoreniVidljiv);
 		
 		boolean oglasKvalifikacijeVidljiv=false;
-		execution.setVariable("oglasOtvoreniVidljiv", oglasKvalifikacijeVidljiv);
+		execution.setVariable("oglasKvalifikacijeVidljiv", oglasKvalifikacijeVidljiv);
 		
 		boolean oglasRestriktivniVidljiv=false;
-		execution.setVariable("oglasOtvoreniVidljiv", oglasRestriktivniVidljiv);
+		execution.setVariable("oglasRestriktivniVidljiv", oglasRestriktivniVidljiv);
 		
 		execution.setVariable("ponudjaciSortirano", ponudjaciSortirano);
 	}
