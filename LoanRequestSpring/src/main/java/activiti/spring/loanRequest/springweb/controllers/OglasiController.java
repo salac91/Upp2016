@@ -28,12 +28,18 @@ public class OglasiController {
 	@Autowired
 	private RuntimeService runtimeService;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/oglasi")
 	private String Oglasi(ModelMap model){
-		try{
+		//try{
 		User user;
-		String pid = ApplicationController.pid;
-		boolean oglasotvoreni=(Boolean) runtimeService.getVariable(pid, "oglasOtvoreniVidljiv");
+		//String pid = ApplicationController.pid;
+		ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("loanRequest").latestVersion().singleResult();
+		
+		String pid = procDef.getId();
+		boolean oglasotvoreni= (Boolean) runtimeService.getVariable(pid, "oglasOtvoreniVidljiv");
+		boolean oglasKvalifikacije=(Boolean) runtimeService.getVariable(pid, "oglasKvalifikacijeVidljiv");
+		boolean oglasRestriktivni=(Boolean) runtimeService.getVariable(pid, "oglasRestriktivniVidljiv");
 		List<Ponudjac> ponudjaciubazi=(List<Ponudjac>) runtimeService.getVariable(pid, "ponudjaci");
 		user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id = user.getUsername();
@@ -45,20 +51,18 @@ public class OglasiController {
 		}
 		
 		model.addAttribute("oglasOtvoreni",oglasotvoreni);
-		}catch(Exception e){
+		model.addAttribute("oglasKvalifikacije",oglasKvalifikacije);
+		model.addAttribute("oglasRestriktivni",oglasRestriktivni);
+		//}catch(Exception e){
 			
-		}
+		//}
 		return "application/oglasi";
 	}
-	
+	//prijava na otvoreni
 	@RequestMapping(value="/oglasi/prijavaOtvoreni", method=RequestMethod.GET)
 	public String OglasiRestriktivni(ModelMap model){
-		//ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("loanRequest").latestVersion().singleResult();
-		//Execution execute = runtimeService.createExecutionQuery().processInstanceId("loanRequest").singleResult();
-		 //Execution execute =  runtimeService.createExecutionQuery().executionId("loanRequest").singleResult();
 		User user;
 		String pid = ApplicationController.pid;
-		System.out.println(pid);
 		
 		try {
 			user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -76,5 +80,50 @@ public class OglasiController {
 		
 		
 	}
+	
+	//prijava na kvalifikacije
+	@RequestMapping(value="/oglasi/prijavaKvalifikacije", method=RequestMethod.GET)
+	public String OglasiKvalifikacije(ModelMap model){
+		User user;
+		String pid = ApplicationController.pid;
+		
+		try {
+			user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		catch (Exception ex) {
+			return "redirect:/login";
+		}
+		
+		String id = user.getUsername();
+		Execution execution= runtimeService.createExecutionQuery().processInstanceId(pid).messageEventSubscriptionName("porukaKvalifikacije").singleResult();
+		runtimeService.messageEventReceived("porukaKvalifikacije", execution.getId(), null);
+		
+		return "application/oglasi";
+		
+		
+	}
+
+	//prijava na restriktivni
+		@RequestMapping(value="/oglasi/prijavaRestriktivni", method=RequestMethod.GET)
+		public String OglasiRestrikvitni(ModelMap model){
+			User user;
+			String pid = ApplicationController.pid;
+			
+			try {
+				user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			}
+			catch (Exception ex) {
+				return "redirect:/login";
+			}
+			
+			String id = user.getUsername();
+			Execution execution= runtimeService.createExecutionQuery().processInstanceId(pid).messageEventSubscriptionName("porukaRestriktivni").singleResult();
+			runtimeService.messageEventReceived("porukaRestriktivni", execution.getId(), null);
+			runtimeService.setVariable(pid, "ponudjac", id);
+			
+			return "application/oglasi";
+			
+			
+		}
 
 }

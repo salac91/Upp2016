@@ -29,12 +29,12 @@ public class PozivZaPodnosenjePonuda implements JavaDelegate{
 		String vremeIstekaTajmeraTemp = dateFormat.format(newDate);
 		String[] tokens = vremeIstekaTajmeraTemp.split(" ");
 		String vremeIstekaTajmera = tokens[0] + "T" + tokens[1];
-		
+		boolean bla=true;
 		execute.setVariable("vremeIstekaTajmera", vremeIstekaTajmera);
 		execute.setVariable("ponudjaciubazi", ponudjaciubazi);
 		execute.setVariable("tajmeristekao", tajmeristekao);
 		execute.setVariable("ponudjaci", ponudjaci);
-		execute.setVariable("oglasOtvoreniVidljiv", true);
+		execute.setVariable("oglasOtvoreniVidljiv", bla);
 	}
 
 }

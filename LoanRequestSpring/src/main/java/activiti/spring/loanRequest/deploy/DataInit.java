@@ -105,6 +105,7 @@ public class DataInit {
 		
 		System.out.println("Broj grupa: " + identityService.createGroupQuery().count());
 		System.out.println("Broj korisnika: " + identityService.createUserQuery().count());
-		System.out.println("Broj korisnika u grupi clanoviciKomisije:  " + identityService.createUserQuery().memberOfGroup("clanoviKomisije").count());
+		System.out.println("Broj korisnika u grupi strucnjaci:  " + identityService.createUserQuery().memberOfGroup("strucnjaci").count());
+		System.out.println("Broj korisnika u grupi pravnici:  " + identityService.createUserQuery().memberOfGroup("pravnici").count());
 	}
 }

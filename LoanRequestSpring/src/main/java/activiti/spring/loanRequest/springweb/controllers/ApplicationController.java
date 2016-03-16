@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.FormService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -39,6 +41,8 @@ public class ApplicationController {
 	private RepositoryService repositoryService;
 	@Autowired
 	private RuntimeService runtimeService;
+	@Autowired
+	private IdentityService identityService;
 	
 	public static String pid;
 
@@ -118,8 +122,15 @@ public class ApplicationController {
 				model.addAttribute("task", task);
 				
 				//ovde dodajem listu
-				List<Ponudjac> ponudjaci=(List<Ponudjac>) runtimeService.getVariable(pid,  "ponudjaciSortirano");
-				model.addAttribute("ponudjaci", ponudjaci);
+				try{
+					List<Ponudjac> ponudjaci=(List<Ponudjac>) runtimeService.getVariable(pid,  "ponudjaciSortirano");				
+					model.addAttribute("ponudjaci", ponudjaci);
+				}catch(Exception e) {				
+				}
+				List<org.activiti.engine.identity.User> strucnjaci = identityService.createUserQuery().memberOfGroup("strucnjaci").list();
+				List<org.activiti.engine.identity.User> pravnici = identityService.createUserQuery().memberOfGroup("pravnici").list();
+				model.addAttribute("strucnjaci", strucnjaci);
+				model.addAttribute("pravnici", pravnici);
 				//U definiciji procesa je definisan formKey, na osnovu kog se odredjuje 
 				//koja se stranica prikazuje
 				String form = formService.getTaskFormData(taskId).getFormKey();
@@ -167,6 +178,7 @@ public class ApplicationController {
 			model.addAttribute("message", message);
 			return printWelcome(model);
 		} else {
+			
 			model.addAttribute("formProperties", formProperties);
 			String form = formService.getStartFormData(procDef.getId()).getFormKey();
 			return "application/"+form;
@@ -180,6 +192,7 @@ public class ApplicationController {
 		ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("loanRequest").latestVersion().singleResult();
 		//takodje bi sada ovde trebala biti uradjena validacija
 		formService.submitStartFormData(procDef.getId(),params);
+		pid =procDef.getId();	
 		String message = "Nova instanca je uspešno pokrenuta";
 		model.addAttribute("message", message);
 		return printWelcome(model);

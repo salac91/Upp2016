@@ -15,9 +15,9 @@ public class ProveraPlanaIBudzeta implements JavaDelegate {
 		
 		int randNumb = rn.nextInt(10);
 		
-		if(randNumb<8) odbijen = false;
-		else odbijen = true;
-		
+		//if(randNumb<9) odbijen = false;
+		//else odbijen = true;
+		odbijen=false;
 		exection.setVariable("odbijen", odbijen);
 	}
 

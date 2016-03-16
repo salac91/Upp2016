@@ -9,14 +9,39 @@
 		<link href="<c:url value="/resources/stylesheets/styles.css"/>"
 			rel="stylesheet" />
 	</head>
+	
+	
 	<body>
+	
 	<c:if test="${oglasOtvoreni == true}">
-		<div id="OtvoreniDiv">
+		<div>
 			<h1>Prijava na otvoreni konkurs</h1>
 			<a href="./oglasi/prijavaOtvoreni">Prijava</a>
 			
 		</div>
 	</c:if>
+	
+	
+	<c:if test="${oglasKvalifikacije == true}">
+		<div>
+			<h1>Prijava na kvalifikacije</h1>
+			<a href="./oglasi/prijavaKvalifikacije">Prijava</a>
+			
+		</div>
+	</c:if>
+	
+	
+	
+	<c:if test="${oglasRestriktivni == true}">
+		<div>
+			<h1>Prijava na restriktivni konkurs</h1>
+			<a href="./oglasi/prijavaRestriktivni">Prijava</a>
+			
+		</div>
+	</c:if>
+	
+	
+	<!--za nazad -->
 		<div class="home">
 			<a href="${pageContext.request.contextPath}/application/welcome">Početna</a>
 		</div>

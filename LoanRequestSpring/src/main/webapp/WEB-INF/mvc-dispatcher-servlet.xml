@@ -51,6 +51,8 @@
 		<property name="customFormTypes">
    			 <list>
     			  <bean class="activiti.spring.tender.customforms.ListForm"/>
+    			  <bean class="activiti.spring.tender.customforms.ListPravnici"/>
+     		      <bean class="activiti.spring.tender.customforms.ListStrucnjaci"/>
    			 </list>
   </property>
 	</bean>

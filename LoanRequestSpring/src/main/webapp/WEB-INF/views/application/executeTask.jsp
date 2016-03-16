@@ -68,6 +68,35 @@
 									</c:forEach>
 								</select>
 							</c:if>
+							
+							<!-- dodatne liste  -->
+							
+							<c:if test="${formProperty.type.name.equals('listStrucnjaci')}">
+								<select
+									<c:if test="${formProperty.writable==true}"> name="${formProperty.id}"</c:if>
+									<c:if test="${formProperty.writable==false}"> disabled </c:if>>
+	
+									<c:forEach var="person"
+										items="${strucnjaci}">
+										<option value="${person.getId()}">${person.getFirstName()} ${person.getLastName()} </option>
+									</c:forEach>
+								</select>
+							</c:if>
+							
+							<c:if test="${formProperty.type.name.equals('listPravnici')}">
+								<select
+									<c:if test="${formProperty.writable==true}"> name="${formProperty.id}"</c:if>
+									<c:if test="${formProperty.writable==false}"> disabled </c:if>>
+	
+									<c:forEach var="person"
+										items="${pravnici}">
+										<option value="${person.getId()}">${person.getFirstName()} ${person.getLastName()}</option>
+									</c:forEach>
+								</select>
+							</c:if>
+							
+							
+							
 						</c:if>
 						
 						<c:if test="${formProperty.readable == false}">
