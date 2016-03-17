@@ -51,7 +51,7 @@
 		         	<div class="container">
 		         	<div align="center">                 
                   		 <h2>Pregled aktivnih i završenih procesa</h2> <br/><br/><br/>           
-             	    
+             	    </div>
 			         <div class="row">
 		               <div class="col-lg-12">
 		                <div class="table-responsive">

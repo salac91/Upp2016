@@ -54,8 +54,11 @@
 		        <div class="inner-bg">
 		         	<div class="container">
 			         	<div align="center">                 
-	                  		 <h1>Pokretanje nove instance procesa</h1> <br/><br/><br/>            
+	                  		 <h1>Pokretanje nove instance procesa</h1><br/>          
 	             	    </div>
+	             	    <div class="home">							
+						</div>
+						<br/><br/><br/>  
 	
 						<c:if test="${fn:length(formProperties) > 0}">
 						 <div class="form-bottom">

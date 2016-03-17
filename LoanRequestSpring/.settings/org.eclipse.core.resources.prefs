@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/activiti/spring/loanRequest/springweb/controllers/ApplicationController.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/application/executeTask.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/application/procesi.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/application/startForm.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/application/tasksList.jsp=UTF-8
